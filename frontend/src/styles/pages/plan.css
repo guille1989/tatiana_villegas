@@ -1,0 +1,371 @@
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.slider-row {
+  background: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.portion-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.portion-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.portion-input input {
+  width: 80px;
+  text-align: right;
+}
+
+.portion-table {
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.portion-row {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, minmax(110px, 1fr));
+  gap: 10px;
+  padding: 12px 14px;
+  align-items: center;
+}
+
+.portion-head {
+  background: #f1f5f9;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.portion-foot {
+  background: #f9f5ec;
+  font-weight: 700;
+}
+
+.portion-row + .portion-row {
+  border-top: 1px solid #e5e7eb;
+}
+
+.portion-row:nth-child(even):not(.portion-head):not(.portion-foot) {
+  background: #fbfdff;
+}
+
+.portion-row input {
+  width: 100%;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #d7dde5;
+  padding: 6px 8px;
+}
+
+.portion-label {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sub-hint {
+  display: block;
+  font-size: 11px;
+  color: #52606d;
+  margin-top: 4px;
+}
+
+.mobile-field-label {
+  display: none;
+  font-size: 12px;
+  color: #52606d;
+  margin-top: 4px;
+}
+
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.status-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+}
+
+.status-ok {
+  border-color: #34d399;
+}
+
+.status-warn {
+  border-color: #fbbf24;
+}
+
+.status-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.status-values {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.status-message {
+  font-size: 13px;
+  color: #52606d;
+}
+
+.status-bar {
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.status-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #22d3ee);
+}
+
+.plan-hero {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  align-items: center;
+  background: linear-gradient(135deg, #0f9d58, #34d399);
+  color: #0b1f19;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 45%),
+              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1), transparent 40%);
+  pointer-events: none;
+}
+
+.plan-hero .btn-primary,
+.plan-hero .btn-secondary {
+  box-shadow: none;
+}
+
+.hero-sub {
+  margin: 0 0 12px;
+  max-width: 420px;
+  color: #0b1f19;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hero-macros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  z-index: 1;
+}
+
+.macro-pill {
+  background: rgba(255,255,255,0.86);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.macro-pill span {
+  display: block;
+  font-size: 13px;
+  color: #0f5132;
+}
+
+.macro-pill strong {
+  font-size: 18px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
+  margin: 0;
+  font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .plan-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.macro-adjust {
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.macro-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.macro-hint {
+  margin: 0;
+  color: #52606d;
+}
+
+.macro-chip {
+  background: #e8f5e9;
+  color: #0f9d58;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.macro-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.macro-row {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1.5fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.macro-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.macro-label small {
+  color: #52606d;
+}
+
+.macro-value {
+  font-weight: 700;
+  text-align: right;
+  color: #0f172a;
+}
+
+.macro-range {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: #0f9d58;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-kcal { background: #f97316; }
+.dot-carbs { background: #06b6d4; }
+.dot-protein { background: #6366f1; }
+.dot-fat { background: #f59e0b; }
+
+@media (max-width: 640px) {
+  .macro-row {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .portion-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "label label"
+      "lean fatty"
+      "carbs fats";
+    row-gap: 8px;
+  }
+  .portion-row > div:nth-child(1) { grid-area: label; }
+  .portion-row > div:nth-child(2) { grid-area: lean; }
+  .portion-row > div:nth-child(3) { grid-area: fatty; }
+  .portion-row > div:nth-child(4) { grid-area: carbs; }
+  .portion-row > div:nth-child(5) { grid-area: fats; }
+
+  .portion-head {
+    display: none;
+  }
+
+  .portion-foot {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "label label"
+      "lean fatty"
+      "carbs fats";
+  }
+
+  .mobile-field-label {
+    display: block;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 999;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #475467;
+}

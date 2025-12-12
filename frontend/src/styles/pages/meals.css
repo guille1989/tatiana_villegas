@@ -1,0 +1,638 @@
+.meal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.alt-select {
+  width: 180px;
+}
+
+.menu-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.menu-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #f8fafc;
+}
+
+.menu-option.active {
+  border-color: #0f9d58;
+  background: #e8f5e9;
+  color: #0f5132;
+}
+
+.menu-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.macro-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.menu-selected {
+  margin-top: 12px;
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.menu-selected-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.selected-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selected-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fff;
+  min-width: 0;
+}
+
+.selected-item > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  flex-shrink: 0;
+}
+
+.counter button {
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.counter button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.counter span {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.day-zones {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.zone-card {
+  border: 1px dashed #cbd5e1;
+  padding: 16px;
+  border-radius: 16px;
+  min-height: 260px;
+  background: #f8fafc;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.meal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.zone-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zone-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zone-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-goals {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.zone-goals.compact .goal-badge {
+  font-size: 12px;
+  padding: 3px 8px;
+}
+
+.zone-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.goal-badge {
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  background: #eef2f7;
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+}
+
+.goal-protein { border-color: #6366f1; color: #312e81; }
+.goal-carbs { border-color: #06b6d4; color: #0f5161; }
+.goal-fat { border-color: #f59e0b; color: #8a4b0f; }
+
+.zone-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.zone-meals {
+  margin-bottom: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+  min-width: 0;
+}
+
+.zone-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.macro-col {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.macro-col-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.macro-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 320px;
+  padding-right: 4px;
+}
+
+.column-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 900px) {
+  .zone-columns-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .day-zones {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .zone-columns-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-primary.full {
+    width: 100%;
+  }
+}
+
+.ingredient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  grid-auto-rows: 1fr;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.ingredient-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ingredient-toolbar input {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ingredient-card {
+  cursor: grab;
+  height: 100%;
+  padding: 16px;
+}
+
+.ingredient-card .card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.macro-line {
+  font-size: 11px;
+  color: #0f172a;
+  margin-top: 1px;
+  overflow-wrap: anywhere;
+}
+
+.ing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ing-table td {
+  padding: 4px 3px;
+  vertical-align: top;
+  font-size: 12px;
+}
+
+.ing-cell {
+  width: 100%;
+}
+
+.ing-counter-cell {
+  white-space: nowrap;
+}
+
+.ing-action-cell {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.ing-mini-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ing-mini-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ing-mini-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+.ing-mini-actions .counter button {
+  min-width: 26px;
+  height: 26px;
+  font-size: 13px;
+}
+.ing-mini-actions .counter span {
+  min-width: 22px;
+  font-size: 13px;
+}
+.ing-mini-actions .btn-secondary {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.macro-status-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-dot {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #e5e7eb;
+}
+
+.status-dot.ok {
+  background: #e8f5e9;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.status-dot.pending {
+  background: #fff7ed;
+  color: #92400e;
+  border-color: #fbbf24;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ingredient-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pill {
+  background: #eef2f7;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.meal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zone-macro-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.modal-ingredient-grid {
+  max-height: 420px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 999;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  width: min(960px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  padding: 16px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #475467;
+}
+
+.meal-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.meal-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.meal-card-selected {
+  border: 2px solid #0f9d58;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge-success {
+  background: #e8f5e9;
+  color: #0f5132;
+  border: 1px solid #0f9d58;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef2f7;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.chip.muted {
+  background: #f1f5f9;
+  color: #52606d;
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.base-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.checklist-card {
+  margin-top: 16px;
+}
+
+.checklist-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.checklist-start {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checklist-start select {
+  padding: 6px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.checklist-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checklist-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-pill {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.status-ok {
+  background: #e8f5e9;
+  color: #0f5132;
+  border: 1px solid #0f9d58;
+}
+
+.status-pending {
+  background: #fff7ed;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+.base-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .checklist-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .checklist-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .checklist-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

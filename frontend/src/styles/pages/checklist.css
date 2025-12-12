@@ -1,0 +1,240 @@
+﻿.checklist-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.header-left h2 {
+  margin: 2px 0;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+}
+
+.header-right select {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  min-width: 200px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.summary-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 120px;
+}
+
+.summary-card h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.summary-card .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #475467;
+  margin: 0;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.weekly-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.weekly-head {
+  margin-bottom: 10px;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.weekly-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.weekly-table th,
+.weekly-table td {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  font-size: 13px;
+}
+
+.weekly-table th {
+  background: #f1f5f9;
+  font-weight: 700;
+}
+
+.weekly-table tbody tr:nth-child(odd) {
+  background: #f9fafb;
+}
+
+.weekly-table td:first-child,
+.weekly-table th:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+
+.interpretation-cell {
+  min-width: 140px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #e5e7eb;
+}
+
+.badge-green { background: #ecfdf3; color: #166534; border-color: #bbf7d0; }
+.badge-amber { background: #fff7ed; color: #92400e; border-color: #fbbf24; }
+.badge-muted { background: #f8fafc; color: #475467; }
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.checklist-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 170px;
+  box-sizing: border-box;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.checklist-item.pending:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.checklist-item.done {
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+}
+
+.checklist-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.checklist-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.status-icon {
+  background: #22c55e;
+  color: #fff;
+  border-radius: 999px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fff7ed;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.positive {
+  color: #166534;
+  font-weight: 600;
+}
+
+.btn-primary.full {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .checklist-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .checklist-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .checklist-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

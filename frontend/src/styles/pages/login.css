@@ -1,0 +1,14 @@
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.auth-card {
+  width: 400px;
+}
+
+.auth-card h2 {
+  margin-top: 0;
+}

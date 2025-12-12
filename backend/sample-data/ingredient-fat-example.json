@@ -1,0 +1,24 @@
+{
+  "category": "fat",
+  "portionLabel": "1 porcion grasa",
+  "macrosPerPortion": { "protein": 0, "carbs": 0, "fat": 5 },
+  "items": [
+    { "name": "Aceite de oliva virgen", "portionGrams": 5, "kcalApprox": 49, "householdMeasure": "1/2 cucharada sopera", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Almendras", "portionGrams": 10, "kcalApprox": 58, "householdMeasure": "8-9 unidades", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Nueces", "portionGrams": 12, "kcalApprox": 78, "householdMeasure": "3 mitades", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Avellanas", "portionGrams": 10, "kcalApprox": 63, "householdMeasure": "8-9 unidades", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Cacahuetes", "portionGrams": 9, "kcalApprox": 52, "householdMeasure": "10 unidades", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Pistachos", "portionGrams": 12, "kcalApprox": 67, "householdMeasure": "12-13 unidades", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Crema frutos secos", "portionGrams": 10, "kcalApprox": 68, "householdMeasure": "1 cucharadita", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Semillas de chia", "portionGrams": 13, "kcalApprox": 64, "householdMeasure": "1 cucharada sopera", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Semillas de lino", "portionGrams": 11, "kcalApprox": 58, "householdMeasure": "1 cucharada sopera", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Semillas de girasol", "portionGrams": 13, "kcalApprox": 74, "householdMeasure": "1 cucharada sopera", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Semillas de calabaza", "portionGrams": 12, "kcalApprox": 67, "householdMeasure": "1 cucharada sopera", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Aguacate", "portionGrams": 30, "kcalApprox": 48, "householdMeasure": "1/2 unidad pequena", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Chocolate negro (70%)", "portionGrams": 15, "kcalApprox": 83, "householdMeasure": "2 cuadrados", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Queso cheddar", "portionGrams": 20, "kcalApprox": 80, "householdMeasure": "1 loncha gruesa", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Queso manchego semicurado", "portionGrams": 18, "kcalApprox": 74, "householdMeasure": "1 triangulo pequeno", "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Queso parmesano", "portionGrams": null, "kcalApprox": null, "householdMeasure": null, "macros": { "protein": 0, "carbs": 0, "fat": 5 } },
+    { "name": "Hummus", "portionGrams": 20, "kcalApprox": 60, "householdMeasure": "3 cucharadas soperas", "macros": { "protein": 0, "carbs": 0, "fat": 5 } }
+  ]
+}
