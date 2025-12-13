@@ -751,16 +751,17 @@ const MealsPage = () => {
                         <div className="macro-section-body">
                           {macro.entries.length === 0 && <p className="muted small">Sin ingredientes</p>}
                           {macro.entries.length > 0 && renderIngredientRow(macro.entries, macro.key)}
-                          <button
-                            type="button"
-                            className="btn-secondary add-macro-btn"
-                            disabled={isMacroComplete(macro.key, zone.key)}
-                            onClick={() => {
-                              if (!isMacroComplete(macro.key, zone.key)) openMacroModal(zone.key, macro.key);
-                            }}
-                          >
-                            + Anadir {macro.label.toLowerCase()}
-                          </button>
+                          {!isMacroComplete(macro.key, zone.key) ? (
+                            <button
+                              type="button"
+                              className="btn-secondary add-macro-btn"
+                              onClick={() => openMacroModal(zone.key, macro.key)}
+                            >
+                              + Anadir {macro.label.toLowerCase()}
+                            </button>
+                          ) : (
+                            <span className="muted small">Macro completo</span>
+                          )}
                         </div>
                       </details>
                     ))}
@@ -878,6 +879,9 @@ const MealsPage = () => {
 };
 
 export default MealsPage;
+
+
+
 
 
 
