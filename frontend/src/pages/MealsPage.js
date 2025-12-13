@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import mealApi from '../api/mealApi';
 import planApi from '../api/planApi';
 import ingredientApi from '../api/ingredientApi';
@@ -334,7 +334,9 @@ const MealsPage = () => {
       const meal = meals.find((m) => m._id === payload.id);
       if (!meal) return;
       setDayPlan((prev) => {
-        const existingIdx = prev[zoneKey].findIndex((entry) => entry.type === 'meal' && entry.payload._id === meal._id);
+        const existingIdx = prev[zoneKey].findIndex(
+          (entry) => entry.type === 'meal' && entry.payload._id === meal._id
+        );
         if (existingIdx >= 0) {
           const updatedZone = [...prev[zoneKey]];
           updatedZone[existingIdx] = {
@@ -626,7 +628,7 @@ const MealsPage = () => {
                   <div className="ingredient-row-info">
                     <strong className="truncate">{ing.name}</strong>
                     <div className="muted small truncate">{portionText}</div>
-                    {macroParts.length > 0 && <div className="macro-line truncate">{macroParts.join(' · ')}</div>}
+                    {macroParts.length > 0 && <div className="macro-line truncate">{macroParts.join(' | ')}</div>}
                   </div>
                   <div className="ingredient-row-actions">
                     <div className="stepper-compact">
@@ -668,7 +670,7 @@ const MealsPage = () => {
                   </div>
                   <div className="title-sub">
                     <span className="chip muted">{zoneEntries.length} ingredientes</span>
-                    <span className="chip muted">P {target.protein} · C {target.carbs} · G {target.fats}</span>
+                    <span className="chip muted">P {target.protein} | C {target.carbs} | G {target.fats}</span>
                   </div>
                   <div className="macro-bars">
                     {[
@@ -775,9 +777,9 @@ const MealsPage = () => {
       {congratsModal.open && (
         <div className="modal-backdrop" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>Ã—</button>
+            <button className="modal-close" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>X</button>
             <div style={{ padding: '12px' }}>
-              <h3>Â¡Felicitaciones!</h3>
+              <h3>Felicitaciones!</h3>
               <p>
                 Marcaste como cumplido el dia {congratsModal.dayLabel}. Este dia queda bloqueado para evitar cambios.
               </p>
@@ -796,7 +798,7 @@ const MealsPage = () => {
       {macroModal.open && (
         <div className="modal-backdrop" onClick={closeMacroModal}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeMacroModal}>Ã—</button>
+            <button className="modal-close" onClick={closeMacroModal}>X</button>
             <div className="macro-modal">
               <div className="macro-modal-head">
                 <div>
@@ -879,12 +881,3 @@ const MealsPage = () => {
 };
 
 export default MealsPage;
-
-
-
-
-
-
-
-
-

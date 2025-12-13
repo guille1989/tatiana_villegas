@@ -9,6 +9,8 @@ import PlanPage from './pages/PlanPage';
 import MealsPage from './pages/MealsPage';
 import MealDetailPage from './pages/MealDetailPage';
 import ChecklistPage from './pages/ChecklistPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminUserDetailPage from './pages/AdminUserDetailPage';
 
 const App = () => {
   return (
@@ -54,6 +56,22 @@ const App = () => {
           element={
             <ProtectedRoute>
               <ChecklistPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users/:id"
+          element={
+            <ProtectedRoute>
+              <AdminUserDetailPage />
             </ProtectedRoute>
           }
         />

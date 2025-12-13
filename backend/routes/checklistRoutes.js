@@ -24,11 +24,18 @@ router.post('/', auth, async (req, res) => {
   try {
     const { date, mealId, status } = req.body;
     const targetDate = normalizeDate(date);
-    const item = await ChecklistItem.findOneAndUpdate(
-      { user: req.user._id, date: targetDate, meal: mealId },
-      { status },
-      { new: true, upsert: true }
-    );
+    const type = mealId ? 'meal' : 'day';
+    const filter = { user: req.user._id, date: targetDate, type };
+    if (mealId) filter.meal = mealId;
+
+    const update = { status, type };
+    if (mealId) update.meal = mealId;
+
+    const item = await ChecklistItem.findOneAndUpdate(filter, update, {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    });
     return res.json(item);
   } catch (err) {
     return res.status(500).json({ message: 'Error guardando checklist' });

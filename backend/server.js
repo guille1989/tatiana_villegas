@@ -9,6 +9,7 @@ import mealRoutes from './routes/mealRoutes.js';
 import checklistRoutes from './routes/checklistRoutes.js';
 import ingredientRoutes from './routes/ingredientRoutes.js';
 import restrictionRoutes from './routes/restrictionRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/meals', mealRoutes);
 app.use('/api/checklist', checklistRoutes);
 app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/restrictions', restrictionRoutes);
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
