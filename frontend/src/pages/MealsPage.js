@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import mealApi from '../api/mealApi';
 import planApi from '../api/planApi';
 import ingredientApi from '../api/ingredientApi';
@@ -31,6 +31,8 @@ const MealsPage = () => {
   const [dayPlan, setDayPlan] = useState(
     MEAL_ZONES.reduce((acc, z) => ({ ...acc, [z.key]: [] }), {})
   );
+  const [isMobile, setIsMobile] = useState(false);
+  const [openZone, setOpenZone] = useState(MEAL_ZONES[0].key);
   const [catalogItems, setCatalogItems] = useState([]);
   const [ingredientSearch, setIngredientSearch] = useState('');
   const [ingredientCategory, setIngredientCategory] = useState('all');
@@ -98,6 +100,17 @@ const MealsPage = () => {
     loadPlan();
     loadCatalog();
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 480;
+      setIsMobile(mobile);
+      if (mobile && openZone === null) setOpenZone(MEAL_ZONES[0].key);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [openZone]);
 
   const persistTemplate = async (
     nextDayPlan = dayPlan,
@@ -257,6 +270,11 @@ const MealsPage = () => {
     }),
     [dayTotals, menuDays]
   );
+
+  const macroProgress = (used, target) => {
+    if (!target || target <= 0) return 0;
+    return Math.min(100, Math.round((used / target) * 100));
+  };
 
   const targets = useMemo(() => {
     if (!plan) return null;
@@ -549,236 +567,216 @@ const MealsPage = () => {
         </>
       )}
 
-      <div className="menu-selected card full-bleed">
-        <div className="menu-selected-head">
-          <div>
-            <p className="eyebrow">Dia base</p>
-            <h3>Platos e ingredientes por tiempo</h3>
-            <p className="hero-sub" style={{ margin: '0' }}>Replica automatica para {FIXED_MENU_DAYS} dias.</p>
-          </div>
-          <div className="base-actions">
-            <span className="chip muted">{Object.values(dayPlan).flat().length} elementos</span>
-            {weekCompleted && (
-              <button
-                className="btn-secondary"
-                type="button"
-                onClick={resetWeek}
-              >
-                Nueva semana
-              </button>
-            )}
-            <button
-              className={`btn-primary ${(!isAllComplete || isLocked) ? 'btn-disabled' : ''}`}
-              type="button"
-              disabled={!isAllComplete || isLocked}
-              onClick={() => {
-                setIsLocked(true);
-                persistTemplate(dayPlan, menuDays, true);
-              }}
-            >
-              {isLocked ? 'Plan bloqueado' : 'Bloquear plan'}
-            </button>
-          </div>
+      <div className="meals-header card">
+        <div className="meals-header-left">
+          <p className="eyebrow">Dia base</p>
+          <h3>Platos e ingredientes por tiempo</h3>
+          <p className="hero-sub" style={{ margin: '0' }}>Replica automatico para {FIXED_MENU_DAYS} dias.</p>
         </div>
-        <div className="day-zones">
-          {MEAL_ZONES.map((zone) => (
-            <div
-              key={zone.key}
-              className="zone-card meal-container"
-              onDrop={(e) => handleDrop(zone.key, e)}
-              onDragOver={handleDragOver}
-            >
-              <div className="zone-header">
-                <div className="zone-title">
-                  <div className="zone-title-row">
-                    <strong>{zone.label}</strong>
-                    <span className="chip muted">{dayPlan[zone.key]?.length || 0} items</span>
-                  </div>
-                  <div className="zone-goals compact">
-                    <span className="goal-badge goal-protein">P {getTargetForMacro(zone.key, 'protein')}</span>
-                    <span className="goal-badge goal-carbs">C {getTargetForMacro(zone.key, 'carbs')}</span>
-                    <span className="goal-badge goal-fat">F {getTargetForMacro(zone.key, 'fats')}</span>
-                  </div>
-                  <div className="macro-status-row">
-                    <span className={`status-dot ${isMacroComplete('protein', zone.key) ? 'ok' : 'pending'}`}>
-                      Proteinas {isMacroComplete('protein', zone.key) ? '✓' : ''}
-                    </span>
-                    <span className={`status-dot ${isMacroComplete('carbs', zone.key) ? 'ok' : 'pending'}`}>
-                      Carbs {isMacroComplete('carbs', zone.key) ? '✓' : ''}
-                    </span>
-                    <span className={`status-dot ${isMacroComplete('fat', zone.key) ? 'ok' : 'pending'}`}>
-                      Grasas {isMacroComplete('fat', zone.key) ? '✓' : ''}
-                    </span>
-                  </div>
-                </div>
-                <div className="zone-actions">
-                  <button
-                    type="button"
-                    className={`btn-secondary ${isMacroComplete('protein', zone.key) ? 'btn-disabled' : ''}`}
-                    onClick={() => {
-                      if (!isMacroComplete('protein', zone.key)) openMacroModal(zone.key, 'protein');
-                    }}
-                  >
-                    Proteinas
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn-secondary ${isMacroComplete('carbs', zone.key) ? 'btn-disabled' : ''}`}
-                    onClick={() => {
-                      if (!isMacroComplete('carbs', zone.key)) openMacroModal(zone.key, 'carbs');
-                    }}
-                  >
-                    Carbs
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn-secondary ${isMacroComplete('fat', zone.key) ? 'btn-disabled' : ''}`}
-                    onClick={() => {
-                      if (!isMacroComplete('fat', zone.key)) openMacroModal(zone.key, 'fat');
-                    }}
-                  >
-                    Grasas
-                  </button>
-                </div>
-              </div>
-
-              {(!dayPlan[zone.key] || dayPlan[zone.key].length === 0) && (
-                <p className="muted small">Agrega platos o ingredientes y se agruparan por macro.</p>
-              )}
-              {(() => {
-                const zoneEntries = dayPlan[zone.key] || [];
-                const mealsEntries = zoneEntries.filter((e) => e.type === 'meal');
-                const ingredientEntries = zoneEntries.filter((e) => e.type === 'ingredient');
-                const proteinIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'protein');
-                const carbIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'carbs');
-                const fatIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'fat');
-                const renderIngredientMini = (entries, macroKey) =>
-                  entries.map((entry) => {
-                    const ing = entry.payload;
-                    const macroParts = [];
-                    if (ing.macros?.protein) macroParts.push(`${ing.macros.protein}g proteina`);
-                    if (ing.macros?.carbs) macroParts.push(`${ing.macros.carbs}g carbs`);
-                    if (ing.macros?.fat) macroParts.push(`${ing.macros.fat}g grasas`);
-                    const portionText = ing.householdMeasure || ing.portionLabel || '1 porcion';
-                    const macroFull = isMacroComplete(macroKey, zone.key);
-                    return (
-                      <div key={`ing-${ing.uid}`} className="ing-mini-card">
-                        <div className="ing-mini-info">
-                          <strong className="truncate">{ing.name}</strong>
-                          <div className="muted small truncate">{portionText}</div>
-                          {macroParts.length > 0 && <div className="macro-line truncate">{macroParts.join(' · ')}</div>}
-                        </div>
-                        <div className="ing-mini-actions">
-                          <div className="counter">
-                            <button type="button" onClick={() => updateCount(zone.key, ing.uid, 'ingredient', -1)}>-</button>
-                            <span>{entry.count || 1}</span>
-                            <button
-                              type="button"
-                              disabled={macroFull}
-                              onClick={() => {
-                                if (!macroFull) updateCount(zone.key, ing.uid, 'ingredient', 1);
-                              }}
-                            >
-                              +
-                            </button>
-                          </div>
-                          <button className="btn-secondary" type="button" onClick={() => removeFromZone(zone.key, ing.uid, 'ingredient')}>X</button>
-                        </div>
-                      </div>
-                    );
-                  });
-                return (
-                  <>
-                    {mealsEntries.length > 0 && (
-                      <div className="zone-meals">
-                        <div className="column-title">Platos completos</div>
-                        <div className="zone-list">
-                          {mealsEntries.map((entry) => {
-                            const meal = entry.payload;
-                            return (
-                              <div key={`meal-${meal._id}`} className="selected-item">
-                                <div>
-                                  <strong>{meal.name}</strong>
-                                  <div className="macros" style={{ fontSize: '12px' }}>
-                                    <span>{meal.totals?.kcal || 0} kcal</span>
-                                    <span>C:{meal.totals?.carbs || 0}g</span>
-                                    <span>P:{meal.totals?.protein || 0}g</span>
-                                    <span>F:{meal.totals?.fat || 0}g</span>
-                                  </div>
-                                </div>
-                                <div className="counter">
-                                  <button type="button" onClick={() => updateCount(zone.key, meal._id, 'meal', -1)}>-</button>
-                                  <span>{entry.count || 1}</span>
-                                  <button type="button" onClick={() => updateCount(zone.key, meal._id, 'meal', 1)}>+</button>
-                                  <button className="btn-secondary" type="button" onClick={() => removeFromZone(zone.key, meal._id, 'meal')}>Quitar</button>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                    <div className="zone-columns-grid">
-                      <div className="macro-col">
-                        <div className="macro-col-head">
-                          <span>Proteinas</span>
-                          <span className="chip muted">{proteinIngredients.length}</span>
-                        </div>
-                        <div className="macro-body">
-                          {proteinIngredients.length === 0 && <p className="muted small">Sin ingredientes</p>}
-                          {proteinIngredients.length > 0 && renderIngredientMini(proteinIngredients, 'protein')}
-                        </div>
-                      </div>
-                      <div className="macro-col">
-                        <div className="macro-col-head">
-                          <span>Carbs</span>
-                          <span className="chip muted">{carbIngredients.length}</span>
-                        </div>
-                        <div className="macro-body">
-                          {carbIngredients.length === 0 && <p className="muted small">Sin ingredientes</p>}
-                          {carbIngredients.length > 0 && renderIngredientMini(carbIngredients, 'carbs')}
-                        </div>
-                      </div>
-                      <div className="macro-col">
-                        <div className="macro-col-head">
-                          <span>Grasas</span>
-                          <span className="chip muted">{fatIngredients.length}</span>
-                        </div>
-                        <div className="macro-body">
-                          {fatIngredients.length === 0 && <p className="muted small">Sin ingredientes</p>}
-                          {fatIngredients.length > 0 && renderIngredientMini(fatIngredients, 'fat')}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })()}
-            </div>
-          ))}
+        <div className="meals-header-right">
+          <span className="chip solid">{Object.values(dayPlan).flat().length} elementos</span>
+          <span className={`chip status-chip ${isLocked ? 'locked' : 'open'}`}>
+            {isLocked ? 'Plan bloqueado' : 'Plan editable'}
+          </span>
+          {weekCompleted && (
+            <button className="btn-secondary" type="button" onClick={resetWeek}>
+              Nueva semana
+            </button>
+          )}
+          <button
+            className={`btn-primary ${(!isAllComplete || isLocked) ? 'btn-disabled' : ''}`}
+            type="button"
+            disabled={!isAllComplete || isLocked}
+            onClick={() => {
+              setIsLocked(true);
+              persistTemplate(dayPlan, menuDays, true);
+            }}
+          >
+            {isLocked ? 'Plan bloqueado' : 'Bloquear plan'}
+          </button>
         </div>
       </div>
 
-    
-{/*      <h3 style={{ marginTop: '12px' }}>Ideas de platos</h3>
-      <div className="meal-list">
-        {meals.length === 0 && <p>Aun no hay platos. Crea algunos desde el backend o seed.</p>}
-        {meals.map((meal) => (
-          <MealCard
-            key={meal._id}
-            meal={meal}
-            draggable
-            onDragStart={handleDragStartMeal}
-            selected={!!Object.values(dayPlan).flat().find((entry) => entry.type === 'meal' && entry.payload._id === meal._id)}
-          />
-        ))}
-      </div> */} 
+      <div className="day-zones modern-grid">
+        {MEAL_ZONES.map((zone) => {
+          const zoneEntries = dayPlan[zone.key] || [];
+          const mealsEntries = zoneEntries.filter((e) => e.type === 'meal');
+          const ingredientEntries = zoneEntries.filter((e) => e.type === 'ingredient');
+          const proteinIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'protein');
+          const carbIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'carbs');
+          const fatIngredients = ingredientEntries.filter((e) => macroTypeForIngredient(e.payload) === 'fat');
+          const usage = zoneMacroUsage(zone.key);
+          const target = {
+            protein: getTargetForMacro(zone.key, 'protein'),
+            carbs: getTargetForMacro(zone.key, 'carbs'),
+            fats: getTargetForMacro(zone.key, 'fats'),
+          };
+          const zoneOpen = !isMobile || openZone === zone.key;
+          const renderIngredientRow = (entries, macroKey) =>
+            entries.map((entry) => {
+              const ing = entry.payload;
+              const macroParts = [];
+              if (ing.macros?.protein) macroParts.push(`${ing.macros.protein}g proteina`);
+              if (ing.macros?.carbs) macroParts.push(`${ing.macros.carbs}g carbs`);
+              if (ing.macros?.fat) macroParts.push(`${ing.macros.fat}g grasas`);
+              const portionText = ing.householdMeasure || ing.portionLabel || '1 porcion';
+              const macroFull = isMacroComplete(macroKey, zone.key);
+              return (
+                <div key={`ing-${ing.uid}`} className="ingredient-row-card">
+                  <div className="ingredient-row-info">
+                    <strong className="truncate">{ing.name}</strong>
+                    <div className="muted small truncate">{portionText}</div>
+                    {macroParts.length > 0 && <div className="macro-line truncate">{macroParts.join(' · ')}</div>}
+                  </div>
+                  <div className="ingredient-row-actions">
+                    <div className="stepper-compact">
+                      <button type="button" onClick={() => updateCount(zone.key, ing.uid, 'ingredient', -1)} aria-label="Restar porcion">-</button>
+                      <span>{entry.count || 1}</span>
+                      <button
+                        type="button"
+                        disabled={macroFull}
+                        onClick={() => {
+                          if (!macroFull) updateCount(zone.key, ing.uid, 'ingredient', 1);
+                        }}
+                        aria-label="Sumar porcion"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button className="ghost-btn" type="button" onClick={() => removeFromZone(zone.key, ing.uid, 'ingredient')} aria-label="Eliminar ingrediente">
+                      X
+                    </button>
+                  </div>
+                </div>
+              );
+            });
 
+          return (
+            <div
+              key={zone.key}
+              className={`meal-time-card ${zoneOpen ? 'open' : 'closed'} ${isZoneComplete(zone.key) ? 'complete' : ''}`}
+              onDrop={(e) => handleDrop(zone.key, e)}
+              onDragOver={handleDragOver}
+            >
+              <div className="meal-time-head">
+                <div className="meal-time-title">
+                  <div className="title-row">
+                    <h4>{zone.label}</h4>
+                    <span className={`status-chip ${isZoneComplete(zone.key) ? 'ok' : 'warn'}`}>
+                      {isZoneComplete(zone.key) ? '✓ Completo' : '⚠ Incompleto'}
+                    </span>
+                  </div>
+                  <div className="title-sub">
+                    <span className="chip muted">{zoneEntries.length} ingredientes</span>
+                    <span className="chip muted">P {target.protein} · C {target.carbs} · G {target.fats}</span>
+                  </div>
+                  <div className="macro-bars">
+                    {[
+                      { key: 'protein', label: 'P', used: usage.protein, tgt: target.protein },
+                      { key: 'carbs', label: 'C', used: usage.carbs, tgt: target.carbs },
+                      { key: 'fats', label: 'G', used: usage.fats, tgt: target.fats },
+                    ].map((m) => (
+                      <div
+                        key={m.key}
+                        className={`macro-bar ${m.used > m.tgt ? 'over' : ''}`}
+                        title={m.used > m.tgt ? `Excediste ${m.label} por ${Math.round((m.used - m.tgt) * 10) / 10} porciones` : ''}
+                      >
+                        <div className="macro-bar-label">{m.label} {Math.round(m.used * 10) / 10} / {m.tgt || 0}</div>
+                        <div className="macro-bar-track">
+                          <div className="macro-bar-fill" style={{ width: `${macroProgress(m.used, m.tgt)}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {isMobile && (
+                  <button type="button" className="accordion-toggle" onClick={() => setOpenZone(zoneOpen ? null : zone.key)} aria-label="Alternar seccion">
+                    {zoneOpen ? 'Ocultar' : 'Mostrar'}
+                  </button>
+                )}
+              </div>
+
+              {zoneOpen && (
+                <div className="meal-time-body">
+                  {(!zoneEntries || zoneEntries.length === 0) && (
+                    <p className="muted small">Agrega platos o ingredientes y se agruparan por macro.</p>
+                  )}
+
+                  {mealsEntries.length > 0 && (
+                    <div className="meals-block">
+                      <div className="block-head">
+                        <span className="block-title">Platos completos</span>
+                        <span className="chip muted">{mealsEntries.length}</span>
+                      </div>
+                      <div className="block-list">
+                        {mealsEntries.map((entry) => {
+                          const meal = entry.payload;
+                          return (
+                            <div key={`meal-${meal._id}`} className="meal-row">
+                              <div className="meal-row-info">
+                                <strong className="truncate">{meal.name}</strong>
+                                <div className="macros small">
+                                  <span>{meal.totals?.kcal || 0} kcal</span>
+                                  <span>C:{meal.totals?.carbs || 0}g</span>
+                                  <span>P:{meal.totals?.protein || 0}g</span>
+                                  <span>F:{meal.totals?.fat || 0}g</span>
+                                </div>
+                              </div>
+                              <div className="ingredient-row-actions">
+                                <div className="stepper-compact">
+                                  <button type="button" onClick={() => updateCount(zone.key, meal._id, 'meal', -1)} aria-label="Restar plato">-</button>
+                                  <span>{entry.count || 1}</span>
+                                  <button type="button" onClick={() => updateCount(zone.key, meal._id, 'meal', 1)} aria-label="Sumar plato">+</button>
+                                </div>
+                                <button className="ghost-btn" type="button" onClick={() => removeFromZone(zone.key, meal._id, 'meal')}>Quitar</button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="macro-accordion">
+                    {[
+                      { key: 'protein', label: 'Proteinas', entries: proteinIngredients },
+                      { key: 'carbs', label: 'Carbs', entries: carbIngredients },
+                      { key: 'fat', label: 'Grasas', entries: fatIngredients },
+                    ].map((macro) => (
+                      <details key={macro.key} className="macro-section" open={!isMobile}>
+                        <summary>
+                          <span>{macro.label} ({macro.entries.length})</span>
+                          <span className="chip muted">{macroRemaining(macro.key, zone.key).portions} restantes</span>
+                        </summary>
+                        <div className="macro-section-body">
+                          {macro.entries.length === 0 && <p className="muted small">Sin ingredientes</p>}
+                          {macro.entries.length > 0 && renderIngredientRow(macro.entries, macro.key)}
+                          <button
+                            type="button"
+                            className="btn-secondary add-macro-btn"
+                            disabled={isMacroComplete(macro.key, zone.key)}
+                            onClick={() => {
+                              if (!isMacroComplete(macro.key, zone.key)) openMacroModal(zone.key, macro.key);
+                            }}
+                          >
+                            + Anadir {macro.label.toLowerCase()}
+                          </button>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
       {congratsModal.open && (
         <div className="modal-backdrop" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>×</button>
+            <button className="modal-close" onClick={() => setCongratsModal({ open: false, dayLabel: '' })}>Ã—</button>
             <div style={{ padding: '12px' }}>
-              <h3>¡Felicitaciones!</h3>
+              <h3>Â¡Felicitaciones!</h3>
               <p>
                 Marcaste como cumplido el dia {congratsModal.dayLabel}. Este dia queda bloqueado para evitar cambios.
               </p>
@@ -797,7 +795,7 @@ const MealsPage = () => {
       {macroModal.open && (
         <div className="modal-backdrop" onClick={closeMacroModal}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeMacroModal}>×</button>
+            <button className="modal-close" onClick={closeMacroModal}>Ã—</button>
             <div className="macro-modal">
               <div className="macro-modal-head">
                 <div>
@@ -880,3 +878,8 @@ const MealsPage = () => {
 };
 
 export default MealsPage;
+
+
+
+
+

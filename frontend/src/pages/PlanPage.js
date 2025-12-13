@@ -378,8 +378,10 @@ const PlanPage = () => {
         </div>
       </div>
 
+      {/* 
       <Link className="btn-primary" to="/meals" style={{ marginTop: '16px', display: 'inline-block' }}>Ver ideas de platos</Link>
-
+        */}
+        
       {showMacroModal && (
         <div className="modal-backdrop" onClick={() => setShowMacroModal(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
