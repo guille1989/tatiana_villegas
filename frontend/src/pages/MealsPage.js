@@ -663,7 +663,7 @@ const MealsPage = () => {
                   <div className="title-row">
                     <h4>{zone.label}</h4>
                     <span className={`status-chip ${isZoneComplete(zone.key) ? 'ok' : 'warn'}`}>
-                      {isZoneComplete(zone.key) ? '✓ Completo' : '⚠ Incompleto'}
+                      {isZoneComplete(zone.key) ? 'Completo' : 'Incompleto'}
                     </span>
                   </div>
                   <div className="title-sub">
@@ -878,6 +878,7 @@ const MealsPage = () => {
 };
 
 export default MealsPage;
+
 
 
 
